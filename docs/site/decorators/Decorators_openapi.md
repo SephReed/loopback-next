@@ -191,6 +191,34 @@ You can find specific use cases in
 _The parameter location cookie is not supported yet, see_
 _(https://github.com/strongloop/loopback-next/issues/997)_
 
+### Parameter decorator for objects
+
+One of the parameter decorator types, `@param.query.object` is applied to
+generate an OpenAPI definition for query parameters with JSON values.
+
+The generated definition supports the `url-encoded` style specified in Open-API.
+This style supports receiving url-encoded payload for json query parameters.
+
+For instance, to filter api results from the GET '/todo-list' endpoint in the
+todo-list example with a specific relation, { "include": [ { "relation": "todo"
+} ] }, the following url-encoded query parameter can be used,
+
+```
+   http://localhost:3000/todos?filter=%7B%22include%22%3A%5B%7B%22relation%22%3A%22todoList%22%7D%5D%7D
+```
+
+As an extension to the url-encoded style, LoopBack also supports queries with
+exploded values for json query parameters.
+
+```
+GET /todos?filter[where][completed]=false
+// filter={where: {completed: 'false'}}
+```
+
+LoopBack has switched definition of json query params from the `exploded`,
+`deep-object` style to the `url-encoded` style definition in Open-API spec, in a
+recent release.
+
 ### RequestBody Decorator
 
 Syntax: see
